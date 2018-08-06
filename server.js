@@ -13,16 +13,17 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-const corOptions = {
+
+const corsOptions = {
     origin: "http://localhost:3000",
     credentials: true,
     optionsSuccessStatus: 200
 };
-app.use(cors(corOptions));
+app.use(cors(corsOptions));
 
 const authController = require("./controllers/authcontroller");
 app.use("/auth/login", authController);
-
+app.use("/comments", commentController);
 app.listen(9000, () => {
     console.log("howdy cowboy");
 });
