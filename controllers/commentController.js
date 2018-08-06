@@ -54,7 +54,6 @@ router.put('/:id', async (req, res) => {
 });
 // Delete route
 router.delete('/:id', async (req, res) => {
-
     try {
         const deletedComment = await Comments.findByIdAndRemove(req.params.id);
         res.json({

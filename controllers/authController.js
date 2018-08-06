@@ -24,6 +24,10 @@ router.post('/login', async (req, res, next) => {
         const passportCallback = await passport.authenticate('local', {successRedirect: '/', failureRedirect: '/auth'})
         passportCallback(req, res, next);
         req.session.loggedIn = true;
+        res.json({
+            status: 200,
+            data: "login successful"
+        })
     } catch (err) {
         res.send(err);
     }
