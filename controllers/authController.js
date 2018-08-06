@@ -15,8 +15,7 @@ router.post("/register", async (req, res) => {
         })
         req.session.loggedIn = true;
     } catch (err) {
-        console.log(err)
-        req.session.message = err.message
+        res.send(err);
     }
 });
 // login route
@@ -26,7 +25,7 @@ router.post('/login', async (req, res, next) => {
         passportCallback(req, res, next);
         req.session.loggedIn = true;
     } catch (err) {
-        console.log(err);
+        res.send(err);
     }
 });
 router.get('/google',

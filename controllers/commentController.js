@@ -11,9 +11,7 @@ router.get('/', async (req, res, next) => {
         status: 200,
         data: allComments
       })
-
     } catch (err){
-
       res.send(err)
     }
 });
@@ -27,7 +25,6 @@ router.post('/', async (req, res) => {
       });
 
     } catch(err){
-      console.log(err);
       res.send(err);
     }
 });
