@@ -20,23 +20,20 @@ router.post("/register", async (req, res) => {
 });
 // login route
 router.post("/login", async (req, res, next) => {
-  try {
-    const passportCallback = await passport.authenticate("local", {
-      successRedirect: "/",
-      failureRedirect: "/auth"
-    });
-    passportCallback(req, res, next);
-    req.session.loggedIn = true;
-    res.json({
-      status: 200,
-      data: "login successful"
-    });
-  } catch (err) {
-    res.json({
-      status: 400,
-      data: err
-    });
-  }
+    const passportCallback = await passport.authenticate('local', function(err, user, info) {
+        if (err) { return next(err); }
+        if (!user) { return res.json({
+            status: 200,
+            data: "login Succesful"
+        }) }
+        req.logIn(user, function(err) {
+          if (err) { return next(err); }
+          return res.json({
+              status: 400,
+              data: err
+          });
+        });
+      })(req, res, next);
 });
 router.get(
   "/google",
