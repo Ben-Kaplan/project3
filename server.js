@@ -3,28 +3,32 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const session = require("express-session");
+require("./passport/local-config");
+require("./passport/google-config");
+require("./passport/serialize");
 
 require("./db/db");
-app.use(session({
+app.use(
+  session({
     secret: "hamburger dinner theater",
     resave: false,
     saveUninitialized: false
-}));
-app.use(bodyParser.urlencoded({extended: false}));
+  })
+);
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
 const corsOptions = {
-    origin: "http://localhost:3000",
-    credentials: true,
-    optionsSuccessStatus: 200
+  origin: "http://localhost:3000",
+  credentials: true,
+  optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
 
 const authController = require("./controllers/authcontroller");
 const commentController = require("./controllers/commentController");
-app.use("/auth/login", authController);
+app.use("/auth", authController);
 app.use("/comments", commentController);
 app.listen(9000, () => {
-    console.log("howdy cowboy");
+  console.log("howdy cowboy");
 });
