@@ -22,6 +22,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const authController = require("./controllers/authcontroller");
+const commentController = require("./controllers/commentController");
 app.use("/auth/login", authController);
 app.use("/comments", commentController);
 app.listen(9000, () => {
