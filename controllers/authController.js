@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require("bcrypt");
 const passport = require("passport");
-
+// register route
 router.post("/register", async (req, res) => {
     try {
         console.log("posting to route")
@@ -13,6 +13,7 @@ router.post("/register", async (req, res) => {
             status: 200,
             data: createdUser
         })
+        req.session.loggedIn = true;
     } catch (err) {
         console.log(err)
         req.session.message = err.message
@@ -20,9 +21,13 @@ router.post("/register", async (req, res) => {
 });
 // login route
 router.post('/login', async (req, res, next) => {
-    const passportCallback = passport.authenticate('local', { successRedirect: '/', failureRedirect: '/auth'})
-    passportCallback(req, res, next);
-    console.log(req.user);
+    try {
+        const passportCallback = await passport.authenticate('local', {successRedirect: '/', failureRedirect: '/auth'})
+        passportCallback(req, res, next);
+        req.session.loggedIn = true;
+    } catch (err) {
+        console.log(err);
+    }
 });
 router.get('/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
