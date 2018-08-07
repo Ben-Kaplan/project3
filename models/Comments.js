@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 
 const CommentSchema = new mongoose.Schema({
-  Rating: Number,
-  Review: String
+  title: String,
+  review: String
 });
 
 module.exports = mongoose.model('Comments', CommentSchema);

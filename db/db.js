@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/weatherTalk");
+mongoose.connect("mongodb://localhost/beerStuff");
 mongoose.connection.on("connected", () => {
     console.log("Mongoose Connected");
 });
